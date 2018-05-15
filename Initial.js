@@ -18,8 +18,9 @@
       spanClass: 'custom-validation-error',
       errorClass: 'custom-validation-input-error',
       attribute: 'custom-validate',
+      auto: true,
     };
-    
+
     this.init(options);
   };
 
@@ -28,71 +29,98 @@
       var _self = this;
       $.extend(this.options, options);
 
-      this.element.bind( "blur", function(e){
-        _self.validate.call(this,_self);
+      this.element.bind("blur", function (e) {
+        _self.validate.call(this, _self);
       });
     },
-    
-    validate: function( _self ){
+
+    validate: function (_self) {
 
       var $this = $(this);
-      var $attr = $this.attr( _self.options.attribute );
+
+
+      var $attr = $this.attr(_self.options.attribute);
       var validationobject;
       var error = false;
-      if( $attr.length ){
-        validationobject = JSON.parse($this.attr( _self.options.attribute ));
-      }
-      
-      if( $this.hasClass( _self.options.errorClass ) ){
-        $this.removeClass( _self.options.errorClass );
+      if ($attr.length) {
+        validationobject = JSON.parse($this.attr(_self.options.attribute));
       }
 
-      if( $this.next( "." + _self.options.spanClass ) ){
-        $this.next( "." + _self.options.spanClass ).remove();
+      if ($this.hasClass(_self.options.errorClass)) {
+        $this.removeClass(_self.options.errorClass);
       }
 
-      if( typeof validationobject === 'object' && typeof validationobject !== 'undefined' ){
+      if ($this.next("." + _self.options.spanClass)) {
+        $this.next("." + _self.options.spanClass).remove();
+      }
+
+      if (typeof validationobject === 'object' && typeof validationobject !== 'undefined') {
 
         // strings
-        if( validationobject.validate.toLowerCase() === 'string' ){
-          if( typeof $this.val().trim() !== 'string' ){
+        if (typeof validationobject.validate !== 'undefined' && validationobject.validate.toLowerCase() === 'string') {
+          if (typeof $this.val().trim() !== 'string') {
             error = true;
           }
         }
 
         // numbers
 
+
         // boolean...
 
         // min length
-        if (validationobject.minlength && $this.val().trim().length < parseInt(validationobject.minlength) ){
+        if (validationobject.minlength && $this.val().trim().length < parseInt(validationobject.minlength)) {
           error = true;
         }
 
 
         // maxlength 
-        if( validationobject.maxlength && $this.val().trim().length > parseInt(validationobject.maxlength) ){
+        if (validationobject.maxlength && $this.val().trim().length > parseInt(validationobject.maxlength)) {
           error = true;
         }
 
+        
+        
+
         // regex ...
+        if (validationobject.regex && validationobject.regex.length) {
+
+          // console.log();
+          // var regexdecode = $('<textarea />').html(validationobject.regex).text();
+          
+          var regex = new RegExp(validationobject.regex);
+
+          if( window.console ) {
+            console.log(regex);
+          }
+          
+          if (!(regex.test($this.val().trim()))) {
+            error = true;
+          }
+        }
+        
 
         // age limit..
 
 
-
-
       }
 
-      if( error ){
+      // try and test what type of input it is if nothing is set
+      if ($this && !error && _self.options.auto) {
 
-        if( typeof validationobject.message !== 'undefined' && validationobject.message.length ){
-          $this.parent().append( "<span class=\""+_self.options.spanClass+"\">"+validationobject.message+"</span>" );
-          $this.addClass( _self.options.errorClass );
-        }
-        else {
-          $this.parent().append( "<span class=\""+_self.options.spanClass+"\">There was an error with this field</span>" );
-          $this.addClass( _self.options.errorClass );
+        var type = $this.attr( "type" );
+
+        
+      }
+
+      if (error) {
+
+        if (typeof validationobject.message !== 'undefined' && validationobject.message.length) {
+          $this.parent().append("<span class=\"" + _self.options.spanClass + "\">" + validationobject.message + "</span>");
+          $this.addClass(_self.options.errorClass);
+        } else {
+          $this.parent().append("<span class=\"" + _self.options.spanClass + "\">There was an error with this field</span>");
+          $this.addClass(_self.options.errorClass);
         }
 
       }
