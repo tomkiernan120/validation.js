@@ -4,39 +4,51 @@
  *  License: Unlicense
  */
 
-;
-((($, window, document, undefined) => {
+;((($, window, document, undefined) => {
 	const pluginName = "validate";
 	const dataKey = `plugin_${pluginName}`;
 
+
 	class Plugin {
 		constructor(element, options) {
-
-			this.element = element;
-
+      
+      this.element = element;
+    
 			this.options = {
 				spanClass: 'custom-validation-error',
 				errorClass: 'custom-validation-input-error',
 				attribute: 'custom-validate',
-				auto: true,
-			};
+        auto: true,
+        autoBindBlur: true,
+      };
+      
+      this.regexp = {
+        creditcard: /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6011[0-9]{12}|622((12[6-9]|1[3-9][0-9])|([2-8][0-9][0-9])|(9(([0-1][0-9])|(2[0-5]))))[0-9]{10}|64[4-9][0-9]{13}|65[0-9]{14}|3(?:0[0-5]|[68][0-9])[0-9]{11}|3[47][0-9]{13})*$/,
+        ipaddress: /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))*$/,
+        URL: /^(((http|https|ftp):\/\/)?([[a-zA-Z0-9]\-\.])+(\.)([[a-zA-Z0-9]]){2,4}([[a-zA-Z0-9]\/+=%&_\.~?\-]*))*$/,
+        ukpostcode: /^([A-Z]{1,2}[0-9][A-Z0-9]? [0-9][ABD-HJLNP-UW-Z]{2})*$/,
+        uspostcode: /^([0-9]{5}(?:-[0-9]{4})?)*$/,
+      };
 
 			this.init(options);
 		}
 
 		init(options) {
-			const _self = this;
-			$.extend(this.options, options);
+      const _self = this;
+      
+      $.extend(this.options, options);
+      
 
-			this.element.bind("blur", function (e) {
-				_self.validate.call(this, _self);
-			});
+      if( this.options.autoBindBlur ){
+        this.element.bind("blur", function (e) {
+          _self.validate.call(this, _self);
+        });
+      } 
 		}
 
 		validate(_self) {
 
-			const $this = $(this);
-
+      const $this = $(this);
 
 			const $attr = $this.attr(_self.options.attribute);
 			let validationobject;
@@ -55,85 +67,75 @@
 
 			if (typeof validationobject === 'object' && typeof validationobject !== 'undefined') {
 
+        $this.val( $.trim( $this.val() ) );
+
 				// strings
 				if (typeof validationobject.validate !== 'undefined' && validationobject.validate.toLowerCase() === 'string') {
-					if (typeof $this.val().trim() !== 'string') {
+					if ( !this.string( $this.val() ) ) {
 						error = true;
 					}
 				}
 
-				// numbers
+        // numbers
+        if (typeof validationobject.validate !== 'undefined' && validationobject.validate.toLowerCase() === 'number'){
+          if( !this.number( $this.val() ) ){
+            error = true;
+          }
+        }
 
-
-				// boolean...
+        // boolean...
+        if( typeof validationobject.validate !== 'undefined' && validationobject.validate.toLowerCase === 'boolean' ){
+          if( !this.boolean( $this.val() ) ){
+            error = false;
+          }
+        }
+        
 
 				// min length
-				if (validationobject.minlength && $this.val().trim().length < parseInt(validationobject.minlength)) {
+				if ( validationobject.minlength && !this.minlength( $this.val(), parseInt(validationobject.minlength) ) ) {
 					error = true;
 				}
 
 
 				// maxlength 
-				if (validationobject.maxlength && $this.val().trim().length > parseInt(validationobject.maxlength)) {
+				if (validationobject.maxlength && !this.maxlength( $this.val(), parseInt( validationobject.maxlength ) ) ) {
 					error = true;
 				}
 
-
-
-
 				// regex ...
 				if (validationobject.regex && validationobject.regex.length) {
-
-					// console.log();
-					// var regexdecode = $('<textarea />').html(validationobject.regex).text();
-
-					const regex = new RegExp(validationobject.regex);
-
-					if (window.console) {
-						console.log(regex);
-					}
-
-					if (!(regex.test($this.val().trim()))) {
-						error = true;
-					}
-				}
+          if( !this.testRegex( value, validationobject.regex ) ){
+            error = false;
+          }
+        }
+        
 
 
 				// credit cards American Express (Amex), Discover, MasterCard, and Visa 
-				if (validationobject.creditcard) {
-
-					if (!(/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6011[0-9]{12}|622((12[6-9]|1[3-9][0-9])|([2-8][0-9][0-9])|(9(([0-1][0-9])|(2[0-5]))))[0-9]{10}|64[4-9][0-9]{13}|65[0-9]{14}|3(?:0[0-5]|[68][0-9])[0-9]{11}|3[47][0-9]{13})*$/.test($this.val()))) {
-						error = true;
-					}
+				if (validationobject.creditcard && !this.creditcard( $this.val() ) ) {
+					error = true;
 				}
 
 				// test for IP address
-				if (validationobject.ipaddress) {
-					if (!(/^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))*$/.test($this.val()))) {
-						error = true;
-					}
+				if (validationobject.ipaddress && !this.ipaddress( $this.val() )) {
+					error = true;
 				}
 
 				// test of URL
-				if (validationobject.url) {
-					if (!(/^(((http|https|ftp):\/\/)?([[a-zA-Z0-9]\-\.])+(\.)([[a-zA-Z0-9]]){2,4}([[a-zA-Z0-9]\/+=%&_\.~?\-]*))*$/.test($this.val()))) {
-						error = true;
-					}
+				if (validationobject.url && !this.url( $this.val() )) {
+					error = true;
 				}
 
 				// test uk postcodes
-				if (validationobject.ukpostcode) {
-					if (!(/^([A-Z]{1,2}[0-9][A-Z0-9]? [0-9][ABD-HJLNP-UW-Z]{2})*$/.test($this.val()))) {
-						error = false;
-					}
+				if (validationobject.ukpostcode && !this.ukpostcode( $this.val() )) {
+					error = true;
 				}
 
 				// test us postcode
-				if (validationobject.uspostcode) {
-					if (!(/^([0-9]{5}(?:-[0-9]{4})?)*$/.test($this.val()))) {
-						error = false;
-					}
+				if (validationobject.uspostcode && !this.uspostcode( $this.val() )){
+					error = true;
 				}
+
 
 				// age limit..
 
@@ -161,17 +163,108 @@
 			}
 
 			return $this;
+    }
+    
+    string( value ) {
+      if( typeof value === 'string' ){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    number( value ){
+      // TODO: update so that method actually parses strings aswell
+      if (typeof value === 'number'){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    boolean( value ) {
+      if( typeof value === 'boolean' ){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    minlength( value, minlength = 1 ){
+      if( value && value.length && value.length >= minlength ){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    maxlength( value, maxlength = 1 ){
+      if( value && value.length && value.length <= maxlength ){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    testRegex( value, regex ){
+			if( regex.test( value ) ){
+				return true;
+			}
+			else {
+				return false;
+			}
+    }
+
+    creditcard( value ){
+			if( value && this.testRegex( value, this.regexp.creditcard ) ){
+				return true;
+			}
+			else {
+				return false;
+			}
+    }
+
+    ipaddress( value ){
+			if( value && this.testRegex( value, this.regexp.ipaddress ) ){
+				return true;
+			}
+			else {
+				return false;
+			}
+    }
+
+    url( value ){
+			if( value && this.testRegex( value, this.regexp.URL ) ){
+				return true;
+			}
+			else {
+				return false;
+			}
+    }
+
+    ukpostcode( value ) {
+			if( value && this.testRegex( value, this.regexp.ukpostcode ) ){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 
-		color(color) {
-			this.options.color = color;
-			this.element.css('color', color);
+		uspostcode( value ){
+			if( value && this.testRegex( value, this.regexp.uspostcode ) ){
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 
-		background(color) {
-			this.options.background = color;
-			this.element.css('background-color', color);
-		}
 	}
 
 	/*

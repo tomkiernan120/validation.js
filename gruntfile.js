@@ -9,8 +9,9 @@ module.exports = function(grunt){
   grunt.initConfig({
     pkg: grunt.file.readJSON( 'package.json' ),
     jshint: {
-      files: ['gruntfile.js', 'src/*.js'],
+      files: ['gruntfile.js', 'src/validation.js'],
       options: {
+        esversion: 6,
         globals: {
           jQuery: true,
           console: true,
@@ -47,7 +48,9 @@ module.exports = function(grunt){
 
 
   // Default task(s).
-  grunt.registerTask('default', ['babel', 'jshint', 'uglify']);
+  grunt.registerTask( 'build', ['babel'] );
+  grunt.registerTask( 'default', ['build', 'jshint', 'uglify']);
+
 
 
 };
