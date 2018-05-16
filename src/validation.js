@@ -61,6 +61,10 @@
 				$this.removeClass(_self.options.errorClass);
 			}
 
+			console.log($this.next(`.${_self.options.spanClass}`));
+
+			
+
 			if ($this.next(`.${_self.options.spanClass}`)) {
 				$this.next(`.${_self.options.spanClass}`).remove();
 			}
@@ -71,40 +75,43 @@
 
 				// strings
 				if (typeof validationobject.validate !== 'undefined' && validationobject.validate.toLowerCase() === 'string') {
-					if ( !this.string( $this.val() ) ) {
+					if( window.console ) {
+						console.log(this);
+					}
+					if ( !_self.string( $this.val() ) ) {
 						error = true;
 					}
 				}
 
         // numbers
         if (typeof validationobject.validate !== 'undefined' && validationobject.validate.toLowerCase() === 'number'){
-          if( !this.number( $this.val() ) ){
+          if( !_self.number( $this.val() ) ){
             error = true;
           }
         }
 
         // boolean...
         if( typeof validationobject.validate !== 'undefined' && validationobject.validate.toLowerCase === 'boolean' ){
-          if( !this.boolean( $this.val() ) ){
+          if( !_self.boolean( $this.val() ) ){
             error = false;
           }
         }
         
 
 				// min length
-				if ( validationobject.minlength && !this.minlength( $this.val(), parseInt(validationobject.minlength) ) ) {
+				if ( validationobject.minlength && !_self.minlength( $this.val(), parseInt(validationobject.minlength) ) ) {
 					error = true;
 				}
 
 
 				// maxlength 
-				if (validationobject.maxlength && !this.maxlength( $this.val(), parseInt( validationobject.maxlength ) ) ) {
+				if (validationobject.maxlength && !_self.maxlength( $this.val(), parseInt( validationobject.maxlength ) ) ) {
 					error = true;
 				}
 
 				// regex ...
 				if (validationobject.regex && validationobject.regex.length) {
-          if( !this.testRegex( value, validationobject.regex ) ){
+          if( !_self.testRegex( value, validationobject.regex ) ){
             error = false;
           }
         }
@@ -112,27 +119,27 @@
 
 
 				// credit cards American Express (Amex), Discover, MasterCard, and Visa 
-				if (validationobject.creditcard && !this.creditcard( $this.val() ) ) {
+				if (validationobject.creditcard && !_self.creditcard( $this.val() ) ) {
 					error = true;
 				}
 
 				// test for IP address
-				if (validationobject.ipaddress && !this.ipaddress( $this.val() )) {
+				if (validationobject.ipaddress && !_self.ipaddress( $this.val() )) {
 					error = true;
 				}
 
 				// test of URL
-				if (validationobject.url && !this.url( $this.val() )) {
+				if (validationobject.url && !_self.url( $this.val() )) {
 					error = true;
 				}
 
 				// test uk postcodes
-				if (validationobject.ukpostcode && !this.ukpostcode( $this.val() )) {
+				if (validationobject.ukpostcode && !_self.ukpostcode( $this.val() )) {
 					error = true;
 				}
 
 				// test us postcode
-				if (validationobject.uspostcode && !this.uspostcode( $this.val() )){
+				if (validationobject.uspostcode && !_self.uspostcode( $this.val() )){
 					error = true;
 				}
 
@@ -153,10 +160,11 @@
 			if (error) {
 
 				if (typeof validationobject.message !== 'undefined' && validationobject.message.length) {
-					$this.parent().append(`<span class="${_self.options.spanClass}">${validationobject.message}</span>`);
+					$(`<span class="${_self.options.spanClass}">${validationobject.message}</span>`).insertAfter($this);
 					$this.addClass(_self.options.errorClass);
-				} else {
-					$this.parent().append(`<span class="${_self.options.spanClass}">There was an error with this field</span>`);
+				} 
+				else {
+					$(`<span class="${_self.options.spanClass}">There was an error with this field</span>`).insertAfter($this);
 					$this.addClass(_self.options.errorClass);
 				}
 
