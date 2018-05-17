@@ -38,18 +38,28 @@ module.exports = function(grunt){
           'src/babel.<%= pkg.name %>.js': 'src/<%= pkg.name %>.js'
         }
       }
-    }
+    },
+    jsdoc: {
+      dist: {
+        src: [ 'src/validation.js' ],
+        options: {
+          destination: 'doc'
+        }
+      }
+    } 
   });
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-jsdoc');
+
 
 
   // Default task(s).
   grunt.registerTask( 'build', ['babel'] );
-  grunt.registerTask( 'default', ['build', 'jshint', 'uglify']);
+  grunt.registerTask( 'default', ['build', 'jsdoc', 'jshint', 'uglify']);
 
 
 

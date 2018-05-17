@@ -1,6 +1,33 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: validation.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: validation.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @author {Tom Kiernan} {tkiernan120@gmail.com}
- * @pr
  *  Project: jQuery Validation plugin
  *  Author: Tom Kiernan
  *  License: Unlicense
@@ -11,11 +38,12 @@
 	const dataKey = `plugin_${pluginName}`;
 
 	/**
+	 * Main plugin class
 	 * @class jQuery Plugin
-	 * @classdesc Main plugin class
 	 */
 	class Plugin {
 		/**
+		 * 
 		 * @param {jQuery} element test
 		 * @param {object} options test
 		 */
@@ -34,7 +62,7 @@
       this.regexp = {
         creditcard: /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6011[0-9]{12}|622((12[6-9]|1[3-9][0-9])|([2-8][0-9][0-9])|(9(([0-1][0-9])|(2[0-5]))))[0-9]{10}|64[4-9][0-9]{13}|65[0-9]{14}|3(?:0[0-5]|[68][0-9])[0-9]{11}|3[47][0-9]{13})*$/,
         ipaddress: /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))*$/,
-        URL: /^(((http|https|ftp):\/\/)?([[a-zA-Z0-9]\-\.])+(\.)([[a-zA-Z0-9]]){2,4}([[a-zA-Z0-9]\/+=%&_\.~?\-]*))*$/,
+        URL: /^(((http|https|ftp):\/\/)?([[a-zA-Z0-9]\-\.])+(\.)([[a-zA-Z0-9]]){2,4}([[a-zA-Z0-9]\/+=%&amp;_\.~?\-]*))*$/,
         ukpostcode: /^([A-Z]{1,2}[0-9][A-Z0-9]? [0-9][ABD-HJLNP-UW-Z]{2})*$/,
         uspostcode: /^([0-9]{5}(?:-[0-9]{4})?)*$/,
       };
@@ -81,12 +109,12 @@
 				$this.next(`.${_self.options.spanClass}`).remove();
 			}
 
-			if (typeof validationobject === 'object' && typeof validationobject !== 'undefined') {
+			if (typeof validationobject === 'object' &amp;&amp; typeof validationobject !== 'undefined') {
 
         $this.val( $.trim( $this.val() ) );
 
 				// strings
-				if (typeof validationobject.validate !== 'undefined' && validationobject.validate.toLowerCase() === 'string') {
+				if (typeof validationobject.validate !== 'undefined' &amp;&amp; validationobject.validate.toLowerCase() === 'string') {
 					if( window.console ) {
 						console.log(this);
 					}
@@ -96,14 +124,14 @@
 				}
 
         // numbers
-        if (typeof validationobject.validate !== 'undefined' && validationobject.validate.toLowerCase() === 'number'){
+        if (typeof validationobject.validate !== 'undefined' &amp;&amp; validationobject.validate.toLowerCase() === 'number'){
           if( !_self.number( $this.val() ) ){
             error = true;
           }
         }
 
         // boolean...
-        if( typeof validationobject.validate !== 'undefined' && validationobject.validate.toLowerCase === 'boolean' ){
+        if( typeof validationobject.validate !== 'undefined' &amp;&amp; validationobject.validate.toLowerCase === 'boolean' ){
           if( !_self.boolean( $this.val() ) ){
             error = false;
           }
@@ -111,50 +139,50 @@
         
 
 				// min length
-				if ( validationobject.minlength && !_self.minlength( $this.val(), parseInt(validationobject.minlength) ) ) {
+				if ( validationobject.minlength &amp;&amp; !_self.minlength( $this.val(), parseInt(validationobject.minlength) ) ) {
 					error = true;
 				}
 
 
 				// maxlength 
-				if (validationobject.maxlength && !_self.maxlength( $this.val(), parseInt( validationobject.maxlength ) ) ) {
+				if (validationobject.maxlength &amp;&amp; !_self.maxlength( $this.val(), parseInt( validationobject.maxlength ) ) ) {
 					error = true;
 				}
 
 				// regex ...
-				if (validationobject.regex && validationobject.regex.length) {
+				if (validationobject.regex &amp;&amp; validationobject.regex.length) {
           if( !_self.testRegex( value, validationobject.regex ) ){
             error = false;
           }
         }
 
 				// credit cards American Express (Amex), Discover, MasterCard, and Visa 
-				if (validationobject.creditcard && !_self.creditcard( $this.val() ) ) {
+				if (validationobject.creditcard &amp;&amp; !_self.creditcard( $this.val() ) ) {
 					error = true;
 				}
 
 				// test for IP address
-				if (validationobject.ipaddress && !_self.ipaddress( $this.val() )) {
+				if (validationobject.ipaddress &amp;&amp; !_self.ipaddress( $this.val() )) {
 					error = true;
 				}
 
 				// test of URL
-				if (validationobject.url && !_self.url( $this.val() )) {
+				if (validationobject.url &amp;&amp; !_self.url( $this.val() )) {
 					error = true;
 				}
 
 				// test uk postcodes
-				if (validationobject.ukpostcode && !_self.ukpostcode( $this.val() )) {
+				if (validationobject.ukpostcode &amp;&amp; !_self.ukpostcode( $this.val() )) {
 					error = true;
 				}
 
 				// test us postcode
-				if (validationobject.uspostcode && !_self.uspostcode( $this.val() )){
+				if (validationobject.uspostcode &amp;&amp; !_self.uspostcode( $this.val() )){
 					error = true;
 				}
 
 				// age limit..
-				if( validationobject.age && validationobject.age ){
+				if( validationobject.age &amp;&amp; validationobject.age ){
 
 				}
 
@@ -162,19 +190,19 @@
 			}
 
 			// try and test what type of input it is if nothing is set
-			if ($this && !error && _self.options.auto) {
+			if ($this &amp;&amp; !error &amp;&amp; _self.options.auto) {
 
 				const type = $this.attr("type");
 			}
 
 			if (error) {
 
-				if (typeof validationobject.message !== 'undefined' && validationobject.message.length) {
-					$(`<span class="${_self.options.spanClass}">${validationobject.message}</span>`).insertAfter($this);
+				if (typeof validationobject.message !== 'undefined' &amp;&amp; validationobject.message.length) {
+					$(`&lt;span class="${_self.options.spanClass}">${validationobject.message}&lt;/span>`).insertAfter($this);
 					$this.addClass(_self.options.errorClass);
 				} 
 				else {
-					$(`<span class="${_self.options.spanClass}">There was an error with this field</span>`).insertAfter($this);
+					$(`&lt;span class="${_self.options.spanClass}">There was an error with this field&lt;/span>`).insertAfter($this);
 					$this.addClass(_self.options.errorClass);
 				}
 
@@ -227,7 +255,7 @@
 		 * @param {number} minlength 
 		 */
     minlength( value, minlength = 1 ){
-      if( value && value.length && value.length >= minlength ){
+      if( value &amp;&amp; value.length &amp;&amp; value.length >= minlength ){
         return true;
       }
       else {
@@ -241,7 +269,7 @@
 		 * @param {number} maxlength 
 		 */
     maxlength( value, maxlength = 1 ){
-      if( value && value.length && value.length <= maxlength ){
+      if( value &amp;&amp; value.length &amp;&amp; value.length &lt;= maxlength ){
         return true;
       }
       else {
@@ -267,7 +295,7 @@
 		 * @param {string} value 
 		 */
     creditcard( value ){
-			if( value && this.testRegex( value, this.regexp.creditcard ) ){
+			if( value &amp;&amp; this.testRegex( value, this.regexp.creditcard ) ){
 				return true;
 			}
 			else {
@@ -279,7 +307,7 @@
 		 * @param {string} value 
 		 */
     ipaddress( value ){
-			if( value && this.testRegex( value, this.regexp.ipaddress ) ){
+			if( value &amp;&amp; this.testRegex( value, this.regexp.ipaddress ) ){
 				return true;
 			}
 			else {
@@ -292,7 +320,7 @@
 		 * @param {string} value 
 		 */
     url( value ){
-			if( value && this.testRegex( value, this.regexp.URL ) ){
+			if( value &amp;&amp; this.testRegex( value, this.regexp.URL ) ){
 				return true;
 			}
 			else {
@@ -305,7 +333,7 @@
 		 * @param {string} value 
 		 */
     ukpostcode( value ) {
-			if( value && this.testRegex( value, this.regexp.ukpostcode ) ){
+			if( value &amp;&amp; this.testRegex( value, this.regexp.ukpostcode ) ){
 				return true;
 			}
 			else{
@@ -318,7 +346,7 @@
 		 * @param {string} value 
 		 */
 		uspostcode( value ){
-			if( value && this.testRegex( value, this.regexp.uspostcode ) ){
+			if( value &amp;&amp; this.testRegex( value, this.regexp.uspostcode ) ){
 				return true;
 			}
 			else {
@@ -350,3 +378,26 @@
 		return plugin;
 	};
 })(jQuery, window, document));
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Plugin.html">Plugin</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed May 16 2018 15:40:08 GMT+0100 (GMT Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

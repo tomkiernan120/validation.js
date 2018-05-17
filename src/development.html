@@ -9,7 +9,7 @@
   <script src="validation.js"></script>
 </head>
 <body>
-<input type="text" custom-validate='{"validate":"string", "minlength":1, "message":"Please apply something"}'>
+<input type="date" custom-validate='{"age": 18, "minlength":1, "message":"Please apply something"}'>
   <script>
     $('[custom-validate]').validate();
   </script>

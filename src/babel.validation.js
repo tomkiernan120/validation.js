@@ -6,7 +6,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/*
+/**
+ * @author {Tom Kiernan} {tkiernan120@gmail.com}
  *  Project: jQuery Validation plugin
  *  Author: Tom Kiernan
  *  License: Unlicense
@@ -16,7 +17,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	var pluginName = "validate";
 	var dataKey = 'plugin_' + pluginName;
 
+	/**
+  * Main plugin class
+  * @class jQuery Plugin
+  */
+
 	var Plugin = function () {
+		/**
+   * 
+   * @param {jQuery} element test
+   * @param {object} options test
+   */
 		function Plugin(element, options) {
 			_classCallCheck(this, Plugin);
 
@@ -41,6 +52,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			this.init(options);
 		}
 
+		/**
+   * 
+   * @param {object} options 
+   */
+
+
 		_createClass(Plugin, [{
 			key: 'init',
 			value: function init(options) {
@@ -54,6 +71,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					});
 				}
 			}
+			/**
+    * 
+    * @param {Plugin} _self 
+    */
+
 		}, {
 			key: 'validate',
 			value: function validate(_self) {
@@ -70,8 +92,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				if ($this.hasClass(_self.options.errorClass)) {
 					$this.removeClass(_self.options.errorClass);
 				}
-
-				console.log($this.next('.' + _self.options.spanClass));
 
 				if ($this.next('.' + _self.options.spanClass)) {
 					$this.next('.' + _self.options.spanClass).remove();
@@ -148,7 +168,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					}
 
 					// age limit..
-
+					if (validationobject.age && validationobject.age) {}
 				}
 
 				// try and test what type of input it is if nothing is set
@@ -170,6 +190,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 				return $this;
 			}
+
+			/**
+    * 
+    * @param {string} value 
+    */
+
 		}, {
 			key: 'string',
 			value: function string(value) {
@@ -179,6 +205,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return false;
 				}
 			}
+			/**
+    * 
+    * @param {number} value 
+    */
+
 		}, {
 			key: 'number',
 			value: function number(value) {
@@ -189,6 +220,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return false;
 				}
 			}
+
+			/**
+    * 
+    * @param {boolean} value 
+    */
+
 		}, {
 			key: 'boolean',
 			value: function boolean(value) {
@@ -198,6 +235,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return false;
 				}
 			}
+			/**
+    * 
+    * @param {string} value 
+    * @param {number} minlength 
+    */
+
 		}, {
 			key: 'minlength',
 			value: function minlength(value) {
@@ -209,6 +252,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return false;
 				}
 			}
+
+			/**
+    * @
+    * @param {string} value 
+    * @param {number} maxlength 
+    */
+
 		}, {
 			key: 'maxlength',
 			value: function maxlength(value) {
@@ -220,6 +270,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return false;
 				}
 			}
+
+			/**
+    * 
+    * @param {string} value 
+    * @param {regexstring} regex 
+    */
+
 		}, {
 			key: 'testRegex',
 			value: function testRegex(value, regex) {
@@ -229,6 +286,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return false;
 				}
 			}
+			/**
+    * 
+    * @param {string} value 
+    */
+
 		}, {
 			key: 'creditcard',
 			value: function creditcard(value) {
@@ -238,6 +300,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return false;
 				}
 			}
+			/**
+    * 
+    * @param {string} value 
+    */
+
 		}, {
 			key: 'ipaddress',
 			value: function ipaddress(value) {
@@ -247,6 +314,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return false;
 				}
 			}
+
+			/**
+    * 
+    * @param {string} value 
+    */
+
 		}, {
 			key: 'url',
 			value: function url(value) {
@@ -256,6 +329,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return false;
 				}
 			}
+
+			/**
+    * 
+    * @param {string} value 
+    */
+
 		}, {
 			key: 'ukpostcode',
 			value: function ukpostcode(value) {
@@ -265,6 +344,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return false;
 				}
 			}
+
+			/**
+    * 
+    * @param {string} value 
+    */
+
 		}, {
 			key: 'uspostcode',
 			value: function uspostcode(value) {
