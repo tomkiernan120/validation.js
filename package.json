@@ -4,7 +4,9 @@
   "description": "Simple Validation JQuery Plugin",
   "main": "Initial.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,8 @@
   "dependencies": {
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^3.3.0",
-    "grunt-contrib-watch": "^1.1.0"
-  }
+    "grunt-contrib-watch": "^1.1.0",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
