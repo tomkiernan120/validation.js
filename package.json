@@ -21,7 +21,7 @@
     "babel-preset-env": "^1.7.0",
     "grunt": "^1.0.2",
     "grunt-babel": "^7.0.0",
-    "grunt-jsdoc": "^2.2.1",
+    "grunt-jsdoc": "2.4.1",
     "gulp-documentation": "^3.2.1",
     "gulp-js-obfuscator": "^1.0.0",
     "qunit": "^2.6.1"
