@@ -24,7 +24,7 @@
     "grunt-jsdoc": "^2.2.1",
     "gulp-documentation": "^3.2.1",
     "gulp-js-obfuscator": "^1.0.0",
-    "qunit": "^2.6.1"
+    "qunit": "2.19.1"
   },
   "dependencies": {
     "grunt-contrib-jshint": "^1.1.0",
