@@ -19,7 +19,7 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
-    "grunt": "^1.0.2",
+    "grunt": "^1.5.3",
     "grunt-babel": "^7.0.0",
     "grunt-jsdoc": "^2.2.1",
     "gulp-documentation": "^3.2.1",
